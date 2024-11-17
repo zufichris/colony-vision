@@ -1,5 +1,5 @@
 # Colony Image Processor Documentation
-**[View Problem](https://github.com/colony-vision/README.md)**
+**[View Problem](https://github.com/zufichris/colony-vision/blob/main/README.md)**
 ## Overview
 
 The **Colony Image Processor** is a Python-based utility for processing microscopy images of colonies. It supports segmentation, generating side-by-side comparisons, and metadata logging. The script is customizable via command-line arguments, making it versatile for various workflows.
