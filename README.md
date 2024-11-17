@@ -1,75 +1,195 @@
-# Project: Colony Image Processing 🚀  
-**[View Solution](https://github.com/colony-vision/solution.md)**
+# Colony Image Processor Documentation
+**[View Problem](https://github.com/colony-vision/README.md)**
+## Overview
 
-## Task Overview  
-The goal is to process **26 images** of colonies forming on dishes, delivering the required outputs with precision and consistency. This project involves basic image segmentation tasks designed to isolate and highlight individual colonies, with emphasis on maintaining the original image resolution.
-
----
-
-## Deliverables  
-
-### For Each Image (Total: 26 Images):  
-
-1. **Original Image**  
-   The unaltered image, exactly as provided.  
-
-2. **Segmented Image**  
-   A processed version where individual colonies are highlighted or isolated.  
-
-3. **Combined Image**  
-   A side-by-side comparison or overlay of the original and segmented images.  
-   - **Note**: The combined image must match the resolution of the original.  
-
-4. **Verification Code**  
-   A unique identifier confirming the image processing is complete and meets requirements.  
+The **Colony Image Processor** is a Python-based utility for processing microscopy images of colonies. It supports segmentation, generating side-by-side comparisons, and metadata logging. The script is customizable via command-line arguments, making it versatile for various workflows.
 
 ---
 
-### Total Outputs  
+## Features
 
-- **Images**:  
-  - **26 Original Images**  
-  - **26 Segmented Images**  
-  - **26 Combined Images**  
-  - **Total**: **78 images**  
-
-- **Resolution**:  
-  - All output images must maintain the **same resolution** as the originals.  
-
----
-
-## Timeline ⏳  
-
-- **Deadline**:  
-  - The task must be completed within **4 days**.  
-
----
-
-## Notes  
-
-- This task is described as one of the **"most basic segmentation requirements."**  
-  - **Expectations**: Standard quality and accuracy for colony isolation.  
-  - **Approach**: Simplicity and efficiency in segmentation algorithms.  
-
-- Images are provided via a **Google Drive link** for immediate download.  
-
----
-
-## Approach  
-
-1. **Image Segmentation**  
-   - Use adaptive thresholding and noise reduction to isolate colonies.  
+1. **Colony Segmentation**  
+   Automatically segments colonies from the background using adaptive thresholding (Otsu's method) and noise reduction.
 
 2. **Image Comparison**  
-   - Create a side-by-side comparison or overlay of the original and processed results.  
+   Generates a side-by-side comparison of the original and segmented images.
 
-3. **Verification Code**  
-   - Generate a unique code for each processed image, ensuring traceability.  
+3. **Metadata Generation**  
+   Creates a JSON metadata file for each image, including the file paths and a unique verification code.
 
-4. **Automation**  
-   - Batch process all 26 images to meet the 4-day deadline efficiently.  
+4. **Logging**  
+   Logs processing details into a text file for easy traceability.
+
+5. **Command-Line Arguments**  
+   Fully customizable input/output directories using `--input_dir` and `--output_dir` options.
 
 ---
 
-## Expected Output Directory Structure 📂  
+## Installation
 
+### Prerequisites
+
+Ensure you have the following installed:
+- Python 3.7+
+- Pip
+
+### Install Required Libraries
+
+Run the following command to install dependencies:
+```bash
+pip install numpy opencv-python scikit-image
+```
+
+---
+
+## Usage
+
+### Command-Line Syntax
+
+```bash
+python ./main.py --input_dir <path_to_input_images> --output_dir <path_to_output_dir>
+```
+
+### Example
+
+```bash
+python ./main.py --input_dir ./images/input --output_dir ./images/output
+```
+
+### Arguments
+
+| Argument      | Required | Description                                   |
+|---------------|----------|-----------------------------------------------|
+| `--input_dir` | Yes      | Directory containing input images to process. |
+| `--output_dir`| Yes      | Directory where processed images will be saved.|
+
+---
+
+## Outputs
+
+After processing, the script generates the following outputs in the `output_dir`:
+
+1. **Original Images**  
+   Saved in the `original/` subdirectory.
+
+2. **Segmented Images**  
+   Binary masks of the segmented colonies saved in `segmented/`.
+
+3. **Combined Images**  
+   Side-by-side comparisons saved in `combined/`.
+
+4. **Metadata**  
+   JSON files with metadata for each processed image:
+   ```json
+   {
+       "original_path": "./output/original/image1_original.png",
+       "segmented_path": "./output/segmented/image1_segmented.png",
+       "combined_path": "./output/combined/image1_combined.png",
+       "verification_code": "PROC_20241117213045_1a2b3c4d"
+   }
+   ```
+
+5. **Processing Log**  
+   A `processing_log.txt` file recording all processing actions:
+   ```
+   Processed image1.jpg - Verification Code: PROC_20241117213045_1a2b3c4d
+   ```
+
+---
+
+## How It Works
+
+1. **Initialization**  
+   The processor sets up the input and output directories, creating subdirectories (`original/`, `segmented/`, `combined/`) as needed.
+
+2. **Colony Segmentation**  
+   - Converts images to grayscale.
+   - Applies Gaussian blur to reduce noise.
+   - Uses Otsu's thresholding to segment colonies.
+   - Removes small artifacts with morphological operations.
+
+3. **Side-by-Side Comparison**  
+   Combines the original image and its segmentation result into one.
+
+4. **Verification Code**  
+   Generates a unique code for each processed image using:
+   - The current timestamp.
+   - A hash of the segmented image data.
+
+5. **Metadata and Logs**  
+   Outputs metadata as JSON files and appends processing details to a log file.
+
+---
+
+## Directory Structure
+
+Example output directory structure:
+```
+output/
+├── combined/
+│   ├── image1_combined.png
+│   └── image2_combined.png
+├── original/
+│   ├── image1_original.png
+│   └── image2_original.png
+├── segmented/
+│   ├── image1_segmented.png
+│   └── image2_segmented.png
+├── image1_metadata.json
+├── image2_metadata.json
+└── processing_log.txt
+```
+
+---
+
+## Development
+
+### Project Structure
+
+```
+.
+├── main.py            # Main script
+├── requirements.txt   # Python dependencies
+```
+
+---
+
+## Extending the Script
+
+1. **Custom Segmentation**  
+   Replace the `segment_colonies()` function to use alternative segmentation techniques.
+
+2. **Additional Outputs**  
+   Add new types of visualizations or metadata exports by extending `process_single_image()`.
+
+3. **Parallel Processing**  
+   Use libraries like `multiprocessing` or `concurrent.futures` to process images faster.
+
+---
+
+## Troubleshooting
+
+| Issue                       | Solution                                                                 |
+|-----------------------------|-------------------------------------------------------------------------|
+| **Image not found error**    | Ensure the `--input_dir` path is correct and contains valid image files.|
+| **Empty output directory**   | Check logs in `processing_log.txt` for specific error messages.         |
+| **Unsupported image format** | Ensure input images are in `.jpg`, `.jpeg`, `.png`, `.tif`, or `.tiff`. |
+
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+## Contributors
+
+- **[Your Name]** - Developer
+- Contributions welcome! Submit pull requests or open issues for new features or bug fixes.
+
+---
+
+## Support
+
+For questions or feedback, feel free to [open an issue](https://github.com/colony-vision/issues).
