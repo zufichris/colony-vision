@@ -1,8 +1,39 @@
+
+---
+
 # Colony Image Processor Documentation
-**[View Problem](https://github.com/colony-vision/README.md)**
+
+**[View Problem](https://github.com/zufichris/colony-vision/blob/main/problem.md)**
+
 ## Overview
 
 The **Colony Image Processor** is a Python-based utility for processing microscopy images of colonies. It supports segmentation, generating side-by-side comparisons, and metadata logging. The script is customizable via command-line arguments, making it versatile for various workflows.
+
+---
+
+## Getting Started
+
+### 1. Clone the Repository
+
+To get started, clone the **Colony Image Processor** repository from GitHub:
+
+```bash
+git clone https://github.com/zufichris/colony-vision.git
+```
+
+After cloning, navigate into the project directory:
+
+```bash
+cd colony-vision
+```
+
+### 2. Install Dependencies
+
+Ensure that you have the required libraries. You can install them using `pip`:
+
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
@@ -36,6 +67,7 @@ Ensure you have the following installed:
 ### Install Required Libraries
 
 Run the following command to install dependencies:
+
 ```bash
 pip install numpy opencv-python scikit-image
 ```
@@ -185,11 +217,13 @@ This project is licensed under the MIT License.
 
 ## Contributors
 
-- **[Your Name]** - Developer
-- Contributions welcome! Submit pull requests or open issues for new features or bug fixes.
+- **[Your Name]** - Developer  
+  Contributions welcome! Submit pull requests or open issues for new features or bug fixes.
 
 ---
 
 ## Support
 
-For questions or feedback, feel free to [open an issue](https://github.com/colony-vision/issues).
+For questions or feedback, feel free to [open an issue](https://github.com/zufichris/colony-vision/issues).
+
+---
