@@ -1,5 +1,5 @@
 # Project: Colony Image Processing 🚀  
-**[View Solution](https://github.com/colony-vision/solution.md)**
+**[View Solution](https://github.com/zufichris/colony-vision/blob/main/solution.md)**
 
 ## Task Overview  
 The goal is to process **26 images** of colonies forming on dishes, delivering the required outputs with precision and consistency. This project involves basic image segmentation tasks designed to isolate and highlight individual colonies, with emphasis on maintaining the original image resolution.
