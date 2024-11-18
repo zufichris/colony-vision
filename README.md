@@ -217,7 +217,7 @@ This project is licensed under the MIT License.
 
 ## Contributors
 
-- **[Your Name]** - Developer  
+- **[zufichris](https://github.com/zufichris)** - Developer  
   Contributions welcome! Submit pull requests or open issues for new features or bug fixes.
 
 ---
