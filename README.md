@@ -1,9 +1,12 @@
 
 ---
 
-# Colony Image Processor Documentation
+# Colony Image Solution
 
 **[View Problem](https://github.com/zufichris/colony-vision/blob/main/problem.md)**
+
+
+**[Read The Docs](https://github.com/zufichris/colony-vision/blob/main/docs.md)**
 
 ## Overview
 
