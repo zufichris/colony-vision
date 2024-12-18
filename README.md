@@ -1,232 +1,138 @@
+# Colony Vision: Image Segmentation project
+
+## Introduction
+The **Colony Image Processing** project is designed to address the challenge of automating the analysis of colonies on microscopy images. The solution emphasizes precision, consistency, and scalability, making it an excellent tool for research labs, diagnostic facilities, and educational purposes.
+
+## Problem Statement
+This project processes a dataset of **26 colony images** by performing **image segmentation** to isolate colonies. It ensures the outputs meet specific deliverables:
+1. **Original Images** remain unaltered.
+2. **Segmented Images** highlight individual colonies.
+3. **Combined Images** provide a side-by-side comparison of the original and segmented images.
+4. Unique **Verification Codes** confirm processing integrity for each image.
+
+The key requirements:
+- Preserve the original image resolution across all outputs.
+- Automate the pipeline to deliver 78 images (26 originals, 26 segmented, 26 combined) within a strict **4-day deadline**.
 
 ---
 
-# Colony Image Solution
+## Solution Overview
+The project is powered by a Python-based script that employs efficient image processing techniques, ensuring high-quality outputs. Here's a summary of its features:
 
-**[View Problem](https://github.com/zufichris/colony-vision/blob/main/problem.md)**
+### Key Functionalities
+1. **Colony Segmentation**: Uses adaptive thresholding (Otsu's method) combined with morphological operations to isolate colonies from the background.
+2. **Side-by-Side Comparison**: Generates a visual comparison between the original and processed images.
+3. **Metadata Logging**: Creates JSON files with paths, unique verification codes, and processing details for each image.
+4. **Automation**: Processes all images in batch mode, ensuring timely delivery.
+5. **Traceability**: Maintains a detailed log of actions for reproducibility and debugging.
 
-
-**[Read The Docs](https://github.com/zufichris/colony-vision/blob/main/docs.md)**
-
-## Overview
-
-The **Colony Image Processor** is a Python-based utility for processing microscopy images of colonies. It supports segmentation, generating side-by-side comparisons, and metadata logging. The script is customizable via command-line arguments, making it versatile for various workflows.
-
----
-
-## Getting Started
-
-### 1. Clone the Repository
-
-To get started, clone the **Colony Image Processor** repository from GitHub:
-
-```bash
-git clone https://github.com/zufichris/colony-vision.git
-```
-
-After cloning, navigate into the project directory:
-
-```bash
-cd colony-vision
-```
-
-### 2. Install Dependencies
-
-Ensure that you have the required libraries. You can install them using `pip`:
-
-```bash
-pip install -r requirements.txt
-```
+### Core Technologies
+- **Python Libraries**: OpenCV, NumPy, scikit-image.
+- **Image Processing Techniques**: Grayscale conversion, Gaussian blurring, adaptive thresholding, and noise reduction.
 
 ---
 
-## Features
+## Workflow
 
-1. **Colony Segmentation**  
-   Automatically segments colonies from the background using adaptive thresholding (Otsu's method) and noise reduction.
+### 1. Image Segmentation
+The algorithm:
+- Converts images to grayscale for uniformity.
+- Reduces noise with Gaussian blur.
+- Applies Otsu's thresholding to segment colonies.
+- Refines results using morphological operations to remove small artifacts.
 
-2. **Image Comparison**  
-   Generates a side-by-side comparison of the original and segmented images.
+### 2. Image Outputs
+Three types of images are generated:
+- **Original Images**: Saved without modifications.
+- **Segmented Images**: Binary masks highlighting colonies.
+- **Combined Images**: Side-by-side visual comparisons.
 
-3. **Metadata Generation**  
-   Creates a JSON metadata file for each image, including the file paths and a unique verification code.
+### 3. Metadata and Logs
+Each processed image generates:
+- A **JSON metadata file** with file paths and a unique verification code.
+- An entry in a **log file** documenting processing details.
 
-4. **Logging**  
-   Logs processing details into a text file for easy traceability.
-
-5. **Command-Line Arguments**  
-   Fully customizable input/output directories using `--input_dir` and `--output_dir` options.
-
----
-
-## Installation
-
-### Prerequisites
-
-Ensure you have the following installed:
-- Python 3.7+
-- Pip
-
-### Install Required Libraries
-
-Run the following command to install dependencies:
-
-```bash
-pip install numpy opencv-python scikit-image
-```
+### 4. Verification Codes
+Each code combines:
+- A timestamp for temporal traceability.
+- A hash of the segmented image for uniqueness.
 
 ---
 
-## Usage
+## Code Implementation
 
-### Command-Line Syntax
-
-```bash
-python ./main.py --input_dir <path_to_input_images> --output_dir <path_to_output_dir>
-```
-
-### Example
-
-```bash
-python ./main.py --input_dir ./images/input --output_dir ./images/output
-```
-
-### Arguments
-
-| Argument      | Required | Description                                   |
-|---------------|----------|-----------------------------------------------|
-| `--input_dir` | Yes      | Directory containing input images to process. |
-| `--output_dir`| Yes      | Directory where processed images will be saved.|
+The project code is modular and structured for scalability:
+- **Initialization**: Sets up input/output directories and creates subdirectories for organized outputs.
+- **Segmentation Logic**: Encapsulated in the `segment_colonies()` function, which applies the image processing pipeline.
+- **Automation**: The `process_all_images()` method processes all images in the input directory.
+- **Error Handling**: Logs errors for unsupported formats or corrupted files, ensuring smooth execution.
 
 ---
 
 ## Outputs
 
-After processing, the script generates the following outputs in the `output_dir`:
-
-1. **Original Images**  
-   Saved in the `original/` subdirectory.
-
-2. **Segmented Images**  
-   Binary masks of the segmented colonies saved in `segmented/`.
-
-3. **Combined Images**  
-   Side-by-side comparisons saved in `combined/`.
-
-4. **Metadata**  
-   JSON files with metadata for each processed image:
-   ```json
-   {
-       "original_path": "./output/original/image1_original.png",
-       "segmented_path": "./output/segmented/image1_segmented.png",
-       "combined_path": "./output/combined/image1_combined.png",
-       "verification_code": "PROC_20241117213045_1a2b3c4d"
-   }
-   ```
-
-5. **Processing Log**  
-   A `processing_log.txt` file recording all processing actions:
-   ```
-   Processed image1.jpg - Verification Code: PROC_20241117213045_1a2b3c4d
-   ```
-
----
-
-## How It Works
-
-1. **Initialization**  
-   The processor sets up the input and output directories, creating subdirectories (`original/`, `segmented/`, `combined/`) as needed.
-
-2. **Colony Segmentation**  
-   - Converts images to grayscale.
-   - Applies Gaussian blur to reduce noise.
-   - Uses Otsu's thresholding to segment colonies.
-   - Removes small artifacts with morphological operations.
-
-3. **Side-by-Side Comparison**  
-   Combines the original image and its segmentation result into one.
-
-4. **Verification Code**  
-   Generates a unique code for each processed image using:
-   - The current timestamp.
-   - A hash of the segmented image data.
-
-5. **Metadata and Logs**  
-   Outputs metadata as JSON files and appends processing details to a log file.
-
----
-
-## Directory Structure
-
-Example output directory structure:
+### Directory Structure
+The output directory contains:
 ```
 output/
-├── combined/
-│   ├── image1_combined.png
-│   └── image2_combined.png
-├── original/
-│   ├── image1_original.png
-│   └── image2_original.png
-├── segmented/
-│   ├── image1_segmented.png
-│   └── image2_segmented.png
-├── image1_metadata.json
-├── image2_metadata.json
-└── processing_log.txt
+├── combined/        # Side-by-side images
+├── original/        # Original images
+├── segmented/       # Segmented images
+├── metadata.json    # Metadata for each image
+└── processing_log.txt  # Logs processing actions
+```
+
+### Metadata Example
+A JSON file (`image1_metadata.json`) contains:
+```json
+{
+    "original_path": "./output/original/image1_original.png",
+    "segmented_path": "./output/segmented/image1_segmented.png",
+    "combined_path": "./output/combined/image1_combined.png",
+    "verification_code": "PROC_20241117213045_1a2b3c4d"
+}
 ```
 
 ---
 
-## Development
+## Usage Instructions
 
-### Project Structure
+### Prerequisites
+- **Python 3.7+**
+- Libraries: Install dependencies via:
+  ```bash
+  pip install -r requirements.txt
+  ```
 
+### Running the Script
+Run the script using:
+```bash
+python main.py --input_dir <path_to_input_images> --output_dir <path_to_output_dir>
 ```
-.
-├── main.py            # Main script
-├── requirements.txt   # Python dependencies
+
+### Example
+```bash
+python main.py --input_dir ./images/input --output_dir ./images/output
 ```
 
 ---
 
-## Extending the Script
+## Scalability and Customization
 
-1. **Custom Segmentation**  
-   Replace the `segment_colonies()` function to use alternative segmentation techniques.
+### Extensibility
+- **Advanced Segmentation**: Replace `segment_colonies()` with custom algorithms for more complex datasets.
+- **Parallel Processing**: Incorporate multiprocessing to handle larger datasets efficiently.
+- **Visualization Enhancements**: Add additional outputs like 3D plots or quantitative analysis.
 
-2. **Additional Outputs**  
-   Add new types of visualizations or metadata exports by extending `process_single_image()`.
-
-3. **Parallel Processing**  
-   Use libraries like `multiprocessing` or `concurrent.futures` to process images faster.
-
----
-
-## Troubleshooting
-
-| Issue                       | Solution                                                                 |
-|-----------------------------|-------------------------------------------------------------------------|
-| **Image not found error**    | Ensure the `--input_dir` path is correct and contains valid image files.|
-| **Empty output directory**   | Check logs in `processing_log.txt` for specific error messages.         |
-| **Unsupported image format** | Ensure input images are in `.jpg`, `.jpeg`, `.png`, `.tif`, or `.tiff`. |
+### Troubleshooting
+| Issue                       | Solution                                                                |
+|-----------------------------|------------------------------------------------------------------------|
+| **Image not found error**    | Check if `--input_dir` path exists and contains supported image files. |
+| **Empty output directory**   | Review `processing_log.txt` for error details.                        |
+| **Unsupported file format**  | Ensure files are `.jpg`, `.png`, `.tif`, or `.tiff`.                  |
 
 ---
 
-## License
+## Conclusion
 
-This project is licensed under the MIT License.
-
----
-
-## Contributors
-
-- **[zufichris](https://github.com/zufichris)** - Developer  
-  Contributions welcome! Submit pull requests or open issues for new features or bug fixes.
-
----
-
-## Support
-
-For questions or feedback, feel free to [open an issue](https://github.com/zufichris/colony-vision/issues).
-
----
+The **Colony Image Processing** project is a robust and flexible tool tailored for image segmentation tasks in scientific and research applications. By automating tedious workflows and ensuring high-quality outputs, it empowers users to focus on insights rather than manual image analysis. For further inquiries or contributions, visit the [GitHub repository](https://github.com/zufichris/colony-vision).
